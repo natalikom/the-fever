@@ -1,0 +1,53 @@
+body { margin: 0; background: url('img/i_beliebe.jpg') no-repeat; background-size: cover; }
+
+h1 {
+    font-size: 8em;
+    color: #FFF;
+    text-shadow: #333 3px 3px 3px;
+    font-family: arial, helvetica, sans-serif;
+    letter-spacing: 0.1em;
+    font-weight: lighter;
+    text-transform: uppercase;
+    margin: 0 0 0.25em 5%;
+}
+
+#container { margin: 2em auto; width: 80%; padding: 3em; }
+
+#tweets li {
+    background: url('img/transparent-bg.png');
+    padding: 1em;
+    font-family: verdana, sans-serif;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    border-radius: 0.5em;
+    border: 1px #333 solid;
+    color: #000;
+    margin: 0 0 2em 0;
+    text-shadow: #BBB 2px 2px 1px;
+}
+
+#tweets li img {
+    margin: 0 1em 0 0;
+    float: left;
+}
+
+#tweets .screen-name {
+    color: #42374c;
+    font-weight: bold;
+    margin-right: 0.5em; 
+    display: inline-block;
+}
+
+#tweets li span {
+    display: inline-block;
+}
+
+#tweets {
+    height: 800px;
+    overflow-y: auto;
+    list-style: none;
+}
+
+.clear {
+    clear: both;
+}
