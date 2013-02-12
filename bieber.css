@@ -46,10 +46,39 @@ h1 {
     height: 800px;
     overflow-y: auto;
     list-style: none;
+    width: 70%;
+    display: inline-block;
 }
 
 #tweets::-webkit-scrollbar { 
     display: none; 
+}
+
+div#tweet-summary-cont {
+    background: url('img/transparent-bg.png');
+    float: right;
+    width: 20%;
+    padding: 0.5em;
+    margin: 0 0 0 1em;
+    font-family: verdana, sans-serif;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    border-radius: 0.5em;
+    border: 1px #333 solid;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+#tweet-summary ul {
+    margin: 0;
+}
+
+ul#tweet-summary .freq {
+    margin-left: 1em;
+    color: #555;
 }
 
 .clear {

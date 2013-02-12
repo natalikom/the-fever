@@ -9,6 +9,8 @@ window.addEventListener('load', function() {
     gimmieMoreBiebs();
     // Start rendering biebs as soon as we have biebs to render
     renderNextTweet();
+    // Start rendering the word summary
+    renderWordSummary();
 }, false);
 
 /**
@@ -27,6 +29,13 @@ renderIndex = 0;
 tweetidToTweet = {};
 
 /**
+ * A hash from word to tweet frequency.
+ */
+wordFreq = {};
+
+wordSplitRegex = /\W/;
+
+/**
  * Whether or not to request more biebs. (aka true)
  */
 requestMoreBiebs = true;
@@ -43,12 +52,56 @@ function renderNextTweet() {
     setTimeout(renderNextTweet, 1000);
 }
 
+function renderWordSummary() {
+
+    var wordSummaryEl = document.getElementById("tweet-summary");
+    // Remove all the children
+    while( wordSummaryEl.childNodes.length )
+        wordSummaryEl.removeChild(wordSummaryEl.firstChild);
+
+    var wordsAndFreqs = [];
+    for( k in wordFreq ) {
+        var tup = { word: k, freq: wordFreq[k] };
+        wordsAndFreqs.push(tup);
+    }
+
+    wordsAndFreqs.sort(function(a, b) {
+        return b['freq'] - a['freq'];
+    });
+
+    for( var i = 0; i < Math.min(wordsAndFreqs.length, 40); i++ ) {
+        var li = document.createElement("li");
+        var span = document.createElement("span");
+        span.className = 'freq';
+        span.appendChild(document.createTextNode("("+wordsAndFreqs[i].freq+")"));
+        li.appendChild(document.createTextNode(wordsAndFreqs[i].word));
+        li.appendChild(span);
+        wordSummaryEl.appendChild(li);
+    }
+
+    setTimeout(renderWordSummary, 2500);
+}
+
+
 function messageToHtml(tweetText) {
     var span = document.createElement("span");
     span.className = 'tweet-body';
     var textNode = document.createTextNode(tweetText);
     span.appendChild(textNode);
     return span;
+}
+
+function processTweetText(text) {
+    var pieces = text.split(wordSplitRegex);
+    for( var i = 0; i < pieces.length; i++ ) {
+        if( pieces[i] != "" && pieces[i] != "http" ) {
+            if( ! wordFreq[pieces[i]] ) {
+                wordFreq[pieces[i]] = 1;
+            } else {
+                wordFreq[pieces[i]]++;
+            }
+        }
+    }
 }
 
 /**
@@ -71,6 +124,9 @@ function renderTweet(tweet) {
     screenNameCont.href = "http://twitter.com/" + tweet.user.screen_name;
     screenNameCont.target = "_blank";
     screenNameCont.appendChild(screenNameText);
+
+    processTweetText(tweet.text);
+
     li.appendChild(screenNameCont);
     li.appendChild(messageToHtml(tweet.text));
 
