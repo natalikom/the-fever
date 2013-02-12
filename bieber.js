@@ -79,11 +79,24 @@ function renderTweet(tweet) {
     li.appendChild(clear);
 
     profImg.addEventListener("load", function(e) {
-        var tweetsEl = document.getElementById("tweets");
-        tweetsEl.insertBefore(li, tweetsEl.childNodes[0]);
-        if( tweetsEl.childNodes.length > 100 ) {
-            tweetsEl.removeChild(tweetsEl.childNodes[tweetsEl.childNodes.length-1]);
-        }
+        setTimeout(function() {
+            var tweetsEl = document.getElementById("tweets");
+            li.style.height = '0';
+            li.style.opacity = '0';
+            tweetsEl.insertBefore(li, tweetsEl.childNodes[0]);
+            if( tweetsEl.childNodes.length > 100 ) {
+                tweetsEl.removeChild(tweetsEl.childNodes[tweetsEl.childNodes.length-1]);
+            }
+            var animate = function(time, max) {
+                var height = time / 10;
+                li.style.height = height + 'px';
+                li.style.opacity = time/max;
+                if( time < max ) {
+                    setTimeout(function() { animate(time+50,max); }, 50);
+                }
+            };
+            animate(0, 500);
+        }, Math.random()*20);
     });
 }
 
