@@ -94,7 +94,8 @@ function messageToHtml(tweetText) {
 function processTweetText(text) {
     var pieces = text.split(wordSplitRegex);
     for( var i = 0; i < pieces.length; i++ ) {
-        if( pieces[i] != "" && pieces[i] != "http" ) {
+        pieces[i] = pieces[i].toLowerCase();
+        if( pieces[i].length > 2 && pieces[i] != "http" ) {
             if( ! wordFreq[pieces[i]] ) {
                 wordFreq[pieces[i]] = 1;
             } else {
